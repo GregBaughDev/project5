@@ -35,7 +35,7 @@ const getMovies = () => {
       const movies = data.results
       const movie = movies[0];
       const movieHTML = $('<div>')
-        .append(`<h2 class="movie-title">${movie.title}</h2>`)
+        .append(`<a href='./movies/${movie.id}'><h2 class="movie-title">${movie.title}</h2></a>`)
         .append(`<img src="${image_URL + movie.poster_path}" alt="${movie.title} poster">`);
         $('#api-test').append(movieHTML);
     })
@@ -54,7 +54,7 @@ const searchMovies = (genre_id) => {
           for(let mov of movies){
               if(mov.genre_ids.includes(genre_id)){
                 const movieHTML = $('<div class="genre-search">')
-                .append(`<h3 class="movie-title">${mov.title}</h3>`)
+                .append(`<a href='./movies/${mov.id}'><h3 class="movie-title">${mov.title}</h3></a>`)
                 .append(`<img class="genre-image" src='${poster_URL}${mov.poster_path}' alt='${mov.title} poster'>`);
                 $('#api-test').append(movieHTML);
             }
