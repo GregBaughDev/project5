@@ -17,5 +17,20 @@
         <a class="navbar-brand" href="/">Pathé Gaumont</a>
         <a class="nav-link" href="/login">Log In</a>
     </nav>
-
+    <div>
+    <label for="genre" class="sr-only">Select a genre</label>
+    <select name="genre" class="form-select text-center" id="genre">
+        <option>--Select a genre--</option>
+        <% for(let genre in genres) { %>
+        <option><%= genre %></option>
+        <% } %>
+    </select>
+    </div>
+    <div class="input-group rounded">
+      <input type="search" class="form-control rounded text-center" placeholder="Search" aria-label="Search"
+        aria-describedby="search-addon" />
+      <span class="input-group-text border-0" id="search-addon">
+        🔎
+      </span>
+    </div>
   </header>

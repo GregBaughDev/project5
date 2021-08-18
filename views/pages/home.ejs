@@ -1,24 +1,19 @@
   <%- include('./partials/header') %>
-    <main role="main" class="container">
+    <main class="main container">
       <h1 class="mt-5">JQuery + TMDB API</h1>
-      <div id="page-title"></div>
-      <label for="genre">Select a genre</label>
-      <select name="genre" id="genre">
-          <option>--Select a genre--</option>
-          <% for(let genre in genres) { %>
-          <option><%= genre %></option>
-          <% } %>
-      </select>
-      <div id="api-test"></div>
-        <nav id="pages" class="d-none" aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item prev-page">
-              <a class="page-link">Previous</a>
-            </li>
-            <li class="page-item next-page">
-              <a class="page-link">Next</a>
-            </li>
-          </ul>
-        </nav>
+      <h2 id="page-title" class="mt-5">Now Playing</h2>
+      <!-- Main Content -->
+      <div id="api-content"></div>
+
+      <!-- Pagination controls -->
+      <a id="prev-page"  class="carousel-control-prev prev-page" role="button" >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a id="next-page" class="carousel-control-next next-page" role="button">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </main>
+
 <%- include('./partials/footer') %>

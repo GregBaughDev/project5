@@ -1,6 +1,8 @@
 /* Global styles */
 :root {
   --font-family: 'Rubik', 'Helvetica', 'Arial', sans-serif;
+  --highlight: orange;
+  --background: #f5f5f5;
 }
 
 *,
@@ -10,6 +12,54 @@
   padding: 0;
 }
 
+.main {
+  justify-content: center;
+  max-width: 1344px;
+  padding: 0 50px;
+}
+
+#api-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 6rem;
+}
+
+/* MOVIE CARDS */
+.movie-div {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem 1.5rem;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 336px;
+  width: 185px;
+}
+
+.movie-div img {
+  height: 278px;
+  width: 185px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.movie-div:hover .movie-title {
+  opacity: 1;
+}
+.movie-div:hover .rating {
+  opacity: 1;
+}
+
+.movie-div img:hover {
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+/*TODO possible transiton */
+/* #api-content:hover > .movie-div:not(:hover) {
+  filter: brightness(80%);
+  transition: 1s ease;
+} */
 
 .movie-title {
   text-overflow: ellipsis;
@@ -17,50 +67,50 @@
   height: 1.25rem;
   text-align: center;
   max-width: 180px;
-  transition: .5s ease;
+  transition: 0.5s ease;
   opacity: 0;
   z-index: 2;
 }
 
-#api-test {
-  /* max-width: 1140px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+.rating {
+  font-size: 1.25rem;
+  color: var(--highlight);
+  text-align: center;
+  transition: 0.5s ease;
+  opacity: 0;
+  z-index: 2;
+}
+/* HEADER */
+.navbar {
+  padding: 1rem 1rem;
+}
+.navbar a {
+  color: var(--highlight);
 }
 
-.movie-div {
-  display: flex;
-  flex-direction: column;
-  margin: .5rem 1.5rem;
-  overflow: hidden;
-  white-space: nowrap
+/* FOOTER */
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-
-.movie-div:hover .movie-title {
-  opacity: 1;
-}
-
-.movie-div svg {
-  width: 20px;
-}
-
-.movie-div img:hover {
-  cursor: pointer;
+/* PAGINATION */
+#prev-page,
+#next-page {
+  width: 5vw;
+  margin: 10rem 0;
+  height: 120vh;
+  
 }
 
 #pages {
   margin-top: 3rem;
   cursor: pointer;
+  
 }
 
-.footer {
-  margin-top: 3rem;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  background-color: #f5f5f5;
+.carousel-control-next,
+.carousel-control-prev {
+  filter: invert(100%);
 }
