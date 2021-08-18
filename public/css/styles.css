@@ -12,6 +12,10 @@
   padding: 0;
 }
 
+body {
+  background-color: var(--background);
+}
+
 .main {
   justify-content: center;
   max-width: 1344px;
