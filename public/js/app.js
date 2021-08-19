@@ -36,20 +36,16 @@ const apiCallNowPlaying = () => {
   return $.getJSON(`${base_URL}/movie/now_playing${api_key}&page=${page}`)
 }
 
-const getMovies = (page) => {
+const getMovies = () => {
   apiCallNowPlaying()
     .then((data) => {
       const movies = data.results
       for (let i = 0; i < movies.length; i++) {
       const movie = movies[i]
       let title = movie.title
-      // Slice title to first two words if overflow
-      // if(movie.title.length > 20){
-      //   title = (title).split(' ').slice(0,2).join(' ')
-      // }
       const movieHTML = $('<div class="movie-div">')
         .append(`<span class="movie-title" id="${movie.id}">${title}</span>`)
-        .append(`<a href="/details/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${title} poster onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`) // If poster load error: load blank.jpg
+        .append(`<a href="/movies/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${title} poster onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`) // If poster load error: load blank.jpg
         // TODO: Community rating should be from DB
         .append(`<span id="star" class="rating">★★★★★</span>`);
         $('#api-content').append(movieHTML);
@@ -84,7 +80,7 @@ const searchMovies = (genre_id) => {
               if(mov.genre_ids.includes(genre_id)){
                 const movieHTML = $('<div class="movie-div">')
                 .append(`<h5 class="movie-title">${mov.title}</h5>`)
-                .append(`<a href="/details/${mov.id}"><img src='${image_URL}${mov.poster_path}' alt='${mov.title} poster onerror="this.onerror=''; this.src='./assets/blank.jpg''></a>`)
+                .append(`<a href="/movies/${mov.id}"><img src='${image_URL}${mov.poster_path}' alt='${mov.title} poster onerror="this.onerror=''; this.src='./assets/blank.jpg''></a>`)
                 // TODO: Community rating should be from DB
                 // Unicode stars are placeholder and can be replaced with different rating system/svgs
                 .append(`<span id="star" class="rating">★★★★★</span>`);
