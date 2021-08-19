@@ -44,11 +44,11 @@ const getMovies = (page) => {
       const movie = movies[i]
       let title = movie.title
       // Slice title to first two words if overflow
-      if(movie.title.length > 20){
-        title = (title).split(' ').slice(0,2).join(' ')
-      }
+      // if(movie.title.length > 20){
+      //   title = (title).split(' ').slice(0,2).join(' ')
+      // }
       const movieHTML = $('<div class="movie-div">')
-        .append(`<h5 class="movie-title" id="${movie.id}">${title}</h5>`)
+        .append(`<span class="movie-title" id="${movie.id}">${title}</span>`)
         .append(`<a href="/details/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${title} poster onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`) // If poster load error: load blank.jpg
         // TODO: Community rating should be from DB
         .append(`<span id="star" class="rating">★★★★★</span>`);
@@ -128,13 +128,3 @@ $('#genre').change((e) => {
   $('.genre-search').remove()
   searchMovies(genres[e.target.value])
 })
-
-// Hide footer until scroll at bottom
-document.onscroll = function() {
-  if(document.documentElement.scrollTop + window.innerHeight == document.documentElement.scrollHeight)
-  {
-    $("footer").removeClass("d-none")
-  }else{
-    $("footer").addClass("d-none")
-  }
-}
