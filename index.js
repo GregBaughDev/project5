@@ -6,6 +6,7 @@ const port = process.env.PORT || 3000;
 
 // require routes
 const homeRouter = require('./routes/home');
+const authRouter = require('./routes/auth');
 
 // body parser
 app.use(express.json());
@@ -20,6 +21,7 @@ app.set('views', './views');
 
 // Routes
 app.use('/', homeRouter);
+app.use('/auth', authRouter);
 
 // Server
 app.listen(port, () => {
