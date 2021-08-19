@@ -44,14 +44,14 @@ const getMovies = () => {
       const movie = movies[i]
       let title = movie.title
       const movieHTML = $('<div class="movie-div">')
-        .append(`<span class="movie-title" id="${movie.id}">${title}</span>`)
-        .append(`<a href="/movies/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${title} poster onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`) // If poster load error: load blank.jpg
+        .append(`<span class="movie-title-tooltip" id="${movie.id}">${title}</span>`)
+        .append(`<a href="/movies/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${title} poster "onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`) // If poster load error: load blank.jpg
         // TODO: Community rating should be from DB
         .append(`<span id="star" class="rating">★★★★★</span>`);
         $('#api-content').append(movieHTML);
       }
       // Change page title and add pagination, if first or last page: don't include pagination
-      // TODO: Refactor
+      // TODO: Refactor or move to separate JS file
       $(".pages").removeClass("d-none")
       if(data.page === 1){
         $(".prev-page").addClass("d-none")
@@ -79,8 +79,8 @@ const searchMovies = (genre_id) => {
           for(let mov of movies){
               if(mov.genre_ids.includes(genre_id)){
                 const movieHTML = $('<div class="movie-div">')
-                .append(`<h5 class="movie-title">${mov.title}</h5>`)
-                .append(`<a href="/movies/${mov.id}"><img src='${image_URL}${mov.poster_path}' alt='${mov.title} poster onerror="this.onerror=''; this.src='./assets/blank.jpg''></a>`)
+                .append(`<span class="movie-title-tooltip">${mov.title}</span>`)
+                .append(`<a href="/movies/${mov.id}"><img src='${image_URL}${mov.poster_path}' alt='${mov.title} poster "onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`)
                 // TODO: Community rating should be from DB
                 // Unicode stars are placeholder and can be replaced with different rating system/svgs
                 .append(`<span id="star" class="rating">★★★★★</span>`);
@@ -103,21 +103,6 @@ const searchMovies = (genre_id) => {
 $(document).ready(() => {
   getMovies(page)
 });
-
-// Next page
-$(".next-page").click(() => {
-  page = page + 1
-  $("#api-content").empty()
-  getMovies(page)
-})
-
-//  Previous page
-$(".prev-page").click(() => {
-  page = page - 1
-  $("#api-content").empty()
-  getMovies(page)
-})
-
 
 // When a genre is selected from the drop down the following is called
 $('#genre').change((e) => {
