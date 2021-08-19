@@ -26,7 +26,6 @@ h1, h2 {
 
 .main {
   justify-content: center;
-  max-width: 1344px;
   padding: 0 50px;
 }
 
@@ -35,7 +34,7 @@ h1, h2 {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 6rem;
+  margin-bottom: 3rem;
 }
 
 /* MOVIE CARDS */
