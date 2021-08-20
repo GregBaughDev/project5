@@ -20,7 +20,7 @@
   font-family: var(--font-family);
 }
 
-h1, h2 {
+h1, h2, h3 {
   font-family: var(--font-heading);
 }
 
@@ -134,4 +134,9 @@ footer {
 .carousel-control-next,
 .carousel-control-prev {
   filter: invert(100%);
+}
+
+/* Details page */
+.genre-image {
+  width: 25%;
 }
