@@ -1,0 +1,24 @@
+<%- include('./pages/partials/head') %>
+<%- include('./pages/partials/header') %>
+<body>
+    <div class="container m-5 d-flex flex-column align-items-center">
+        <div id="movie-details" class="d-flex flex-column align-items-center"></div>
+        <div class="border border-primary p-3 w-50 my-4 d-flex flex-column align-items-center">
+            <form id="rating" class="d-flex flex-column align-items-center w-50">
+                <label for="rating" class="form-label">Leave a rating </label>
+                <input type="range" class="form-range" id="rating" value="5" min="1" max="10">
+                <button class="btn btn-primary" type="submit">Rate!</button>
+                <h4 class="my-2 text-center" id="rating-dsp">Your rating is: 5</h4>
+            </form>
+        </div>
+        <div class="w-50 my-4 d-flex flex-column align-items-center">
+            <form id="watchlist">
+                <label for="watchlist-add" class="form-label">Add to my watch list</label>
+                <button class="btn btn-warning">Add!</button> 
+            </form>
+        </div>
+    </div>
+    <script> const movie_id = <%= id %> </script>
+    <script src="/js/movie.js"></script>
+</body>
+</html>
