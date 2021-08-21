@@ -13,7 +13,7 @@ router
 
 router
   .route('/rating/:id')
-  .get(checkAuthenticated, (req, res) => {
+  .get((req, res) => {
     const {id} = req.params
     db.oneOrNone('SELECT AVG(rating) FROM ratings WHERE movie_id = $1', [id])
     .then((rating) => {

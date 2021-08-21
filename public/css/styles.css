@@ -4,7 +4,6 @@
   --font-family: 'Rubik', 'Helvetica', 'Arial', sans-serif;
   --font-heading: 'Josefin Sans', sans-serif;;
   --highlight: orange;
-  --background: yellow;
   --background-main: #000;
 }
 
@@ -15,8 +14,9 @@
   padding: 0;
 }
 
-.body {
+body {
   background: url(https://www.transparenttextures.com/patterns/church.png);
+  background: var(--background-main);
   font-family: var(--font-family);
 }
 
@@ -24,18 +24,6 @@ h1, h2, h3 {
   font-family: var(--font-heading);
 }
 
-.main {
-  justify-content: center;
-  padding: 0 50px;
-}
-
-#api-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 3em;
-}
 
 /* MOVIE CARDS */
 .movie-div {
@@ -63,6 +51,19 @@ h1, h2, h3 {
 .movie-div img:hover {
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+
+#score {
+  left: 150px;
+  top: -15px;
+  background: var(--highlight);
+  width: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 20px;
+  border: 1px solid var(--background-main);
+  position: absolute;
 }
 
 /* tooltip */
@@ -94,7 +95,7 @@ h1, h2, h3 {
 }
 
 .rating {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: var(--highlight);
   text-align: center;
   transition: 0.5s ease;
@@ -103,9 +104,6 @@ h1, h2, h3 {
 }
 
 /* HEADER */
-.navbar {
-  padding: 1rem 1rem;
-}
 .navbar a, .navbar .log {
   color: var(--highlight);
   border-color: var(--highlight);
@@ -117,10 +115,6 @@ h1, h2, h3 {
 }
 
 /* FOOTER */
-#page-container {
-  position: relative;
-  min-height: 100vh;
-}
 
 footer {
   position:absolute;
@@ -134,12 +128,12 @@ footer {
 }
 
 /* PAGINATION */
-#prev-page,
+#prev-page 
 #next-page {
   width: 5vw;
   margin: 15vh 0;
   height: 100vh;
-  
+
 }
 
 #pages {
@@ -150,10 +144,6 @@ footer {
 
 .carousel-control-next,
 .carousel-control-prev {
+  width: 200%;
   filter: invert(100%);
-}
-
-/* Details page */
-.genre-image {
-  width: 25%;
 }

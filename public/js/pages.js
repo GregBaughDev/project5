@@ -1,21 +1,19 @@
-
-// Next page
 $(".next-page").click(() => {
   if(page === 55) return
   page = page + 1
   $("#api-content").empty()
   getMovies(page)
+  $('title').text(`Cinémas Pathé Gaumont - Page ${page}`)
 })
 
-//  Previous page
 $(".prev-page").click(() => {
   if(page === 1) return
   page = page - 1
   $("#api-content").empty()
   getMovies(page)
+  $('title').text(`Cinémas Pathé Gaumont - Page ${page}`)
 })
 
-// Arrow Keys
 document.onkeyup = function(evt) {
   evt = evt || window.event;
   switch (evt.keyCode) {
