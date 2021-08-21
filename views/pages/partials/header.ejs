@@ -2,6 +2,15 @@
   <header>
     <nav class="navbar bg-dark">
         <a class="navbar-brand" href="/">Pathé Gaumont</a>
-        <a class="nav-link" href="/auth">Log In</a>
+        <% if (login) { %>
+        <div>
+        <a role="button" id='dashboard' class="btn btn-outline-light profile" href="/dashboard">Profile</a>
+        <a role="button" id='login' class="btn btn-outline-primary log" href="/login/logout">Log Out</a>
+        </div>
+        <% } else { %> 
+        <a role="button" id='login' class="btn btn-outline-primary log" href="/login">Log In</a>
+        <% } %>
     </nav>
   </header>
+  <div id="page-container">
+  <div id="content-wrap">

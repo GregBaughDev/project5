@@ -5,7 +5,7 @@ router
     .route('/:id')
     .get((req, res) => {
         const {id} = req.params
-        res.render('./details', {id})
+        res.render('pages/details', {id})
     })
 
 module.exports = router

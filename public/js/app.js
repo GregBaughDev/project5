@@ -43,26 +43,27 @@ const getMovies = () => {
       for (let i = 0; i < movies.length; i++) {
       const movie = movies[i]
       let title = movie.title
+      $.get( `http://localhost:3000/rating/${movie.id}`, function( data ) {
+        let rating = Math.round(data.avg);
+        let stars = '★'.repeat(rating / 2)
+        if(data.avg === null){
+          stars = "No rating yet"}     
       const movieHTML = $('<div class="movie-div">')
         .append(`<span class="movie-title-tooltip" id="${movie.id}">${title}</span>`)
         .append(`<a href="/movies/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${title} poster "onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`) // If poster load error: load blank.jpg
-        // TODO: Community rating should be from DB
-        .append(`<span id="star" class="rating">★★★★★</span>`);
+        .append(`<span id="star" class="rating">${stars}</span>`);
         $('#api-content').append(movieHTML);
-      }
+      })
+    }
       // Change page title and add pagination, if first or last page: don't include pagination
       // TODO: Refactor or move to separate JS file
-      $(".pages").removeClass("d-none")
+      $('#page').text(`Page ${data.page}/${data.total_pages}`)
       if(data.page === 1){
-        $(".prev-page").addClass("d-none")
-        $('#page').text(`Page ${data.page}/${data.total_pages}`)
+        $(".prev-page").hide()
         return
       }
-      $(".prev-page").removeClass("d-none")
-      if(data.page === data.total_pages) return $(".next-page").addClass("d-none")
-      $(".next-page").removeClass("d-none")
-      console.log(data.page)
-      $('#page').text(`Page ${data.page}/${data.total_pages}`)
+      $(".prev-page").show()
+      if(data.page === data.total_pages) return $(".next-page").hide()
     })
     .catch((err) => {
       console.log("err");
@@ -88,16 +89,16 @@ const searchMovies = (genre_id) => {
             }
         }
         // Change page title and remove pagination
-        $('#page-title').text(`Movies by Genre: ${genreName}`).addClass("genre-search");
-        $('#page').text(``)
-        $("#next-page").addClass("d-none")
-        $("#prev-page").addClass("d-none")
+        $("#next-page").hide()
+        $("#prev-page").hide()
     })
     .catch((err) => {
       console.log(err);
       $('#api-content').append(`<p>${err.responseJSON.status_message}</p>`);
     })
 }
+
+
 
 // On document ready the getMovies function is called
 $(document).ready(() => {
@@ -109,3 +110,7 @@ $('#genre').change((e) => {
   $('.genre-search').remove()
   searchMovies(genres[e.target.value])
 })
+
+function getCommunityRating(movie_id){
+  
+}

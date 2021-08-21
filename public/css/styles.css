@@ -4,7 +4,7 @@
   --font-family: 'Rubik', 'Helvetica', 'Arial', sans-serif;
   --font-heading: 'Josefin Sans', sans-serif;;
   --highlight: orange;
-  --background: #f5f5f5;
+  --background: yellow;
   --background-main: #000;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .body {
-  background: var(--background);  
+  background: url(https://www.transparenttextures.com/patterns/church.png);
   font-family: var(--font-family);
 }
 
@@ -34,7 +34,7 @@ h1, h2, h3 {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 3rem;
+  margin-bottom: 3em;
 }
 
 /* MOVIE CARDS */
@@ -77,7 +77,7 @@ h1, h2, h3 {
   opacity: 0;
   z-index: 3;
   color: #fff;
-  background:  	rgb(72,72,72, 1);
+  background:  	var(--background-main);
   border-radius: 6px;
 }
 
@@ -85,12 +85,12 @@ h1, h2, h3 {
 .movie-title-tooltip::after {
   content: " ";
   position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  top: 100%;
   left: 50%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: rgb(72,72,72, 1) transparent transparent transparent;
+  border-color: var(--background-main) transparent transparent transparent;
 }
 
 .rating {
@@ -98,7 +98,7 @@ h1, h2, h3 {
   color: var(--highlight);
   text-align: center;
   transition: 0.5s ease;
-  opacity: 0;
+  opacity: 1;
   z-index: 2;
 }
 
@@ -106,21 +106,38 @@ h1, h2, h3 {
 .navbar {
   padding: 1rem 1rem;
 }
-.navbar a {
+.navbar a, .navbar .log {
   color: var(--highlight);
+  border-color: var(--highlight);
+}
+
+.navbar .log:hover {
+  background: var(--highlight);
+  border-color: var(--highlight);
 }
 
 /* FOOTER */
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
 footer {
+  position:absolute;
+  height: 3rem;
   bottom: 0;
   width: 100%;
+}
+
+#content-wrap {
+  padding-bottom: 3rem;    /* Footer height */
 }
 
 /* PAGINATION */
 #prev-page,
 #next-page {
   width: 5vw;
-  margin: 20rem 0;
+  margin: 15vh 0;
   height: 100vh;
   
 }

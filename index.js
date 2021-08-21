@@ -1,31 +1,35 @@
 const express = require('express');
-const db = require('./conn/conn');
-const session = require('express-session');
-const bcrypt = require('bcrypt')
-const passport = require('passport');
-
+const passport = require("passport");
+const session = require("express-session");
 const app = express();
+
 const port = process.env.PORT || 3000;
 
-const initializePassport = require('./passport-config')
-initializePassport(
-  passport,
-  email => users.find(user => user.email === email),
-  id => users.find(user => user.id === id)
-)
 /// Session Middleware
 app.use(session ({
-  name: "Cinema",
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
 }))
 
+// Passport.js
+const initializePassport = require("./passportConfig");
+initializePassport(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+
+// set locals variable when authenticated
+app.use(function (req, res, next) {
+  res.locals.login = req.isAuthenticated();
+  next(); });
+
 // require routes
 const homeRouter = require('./routes/home');
-const authRouter = require('./routes/auth');
-const movies = require('./routes/movies');
-
+const loginRouter = require('./routes/login')
+const dashboardRouter = require('./routes/dashboard')
+const signupRouter = require('./routes/signup')
+const moviesRouter = require('./routes/movies');
+const emailRouter = require('./routes/mailer')
 
 // body parser
 app.use(express.json());
@@ -40,8 +44,23 @@ app.set('views', './views');
 
 // Routes
 app.use('/', homeRouter);
-app.use('/auth', authRouter);
-app.use('/movies', movies);
+app.use("/login", loginRouter)
+app.use("/dashboard", dashboardRouter)
+app.use("/signup", signupRouter)
+app.use('/movies', moviesRouter);
+app.use("/email", emailRouter)
+
+
+// Test passport
+app.get('/test', function (req, res) {
+  if(!req.user) return res.send("Not logged in")
+  return res.send(req.user)
+})
+
+// 404
+app.get("*", (req, res) => {
+  res.render("pages/error");
+})
 
 // Server
 app.listen(port, () => {
