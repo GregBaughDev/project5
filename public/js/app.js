@@ -80,27 +80,6 @@ $(document).ready(() => {
   getMovies();
 });
 
-// Changes API call route and highlights button
-$('#now').click(() => {
-  get_URL = now;
-  $('a').removeClass('active');
-  $('#now').addClass('active');
-  $('#api-content').empty();
-  getMovies();
-});
-$('#discover').click(() => {
-  get_URL = discover;
-  $('a').removeClass('active');
-  $('#discover').addClass('active');
-  $('#api-content').empty();
-  getMovies();
-});
-$('#random').click(() => {
-  page = random_page;
-  $('#random').addClass('active');
-  $('#api-content').empty();
-  getMovies();
-});
 
 // When a genre is selected from the drop down the following is called
 $('#genre').change((e) => {
@@ -109,7 +88,7 @@ $('#genre').change((e) => {
   $('#prev-page').hide();
   searchMovies(genres[e.target.value]);
 });
-// \Updates pages in footer and calculates random page for hidden gem feature
+// Updates pages in footer and calculates random page for hidden gem feature
 function showPages(data) {
   random_page = Math.floor(Math.random() * data.total_pages) + 1;
   $('#page').text(`Page ${data.page}/${data.total_pages}`);
@@ -142,3 +121,27 @@ function makeCard(movie) {
     $('#api-content').append(movieHTML);
   });
 }
+
+// Changes API call route and highlights button
+$('#now').click(() => {
+  page = 1;
+  get_URL = now;
+  $('a').removeClass('active');
+  $('#now').addClass('active');
+  $('#api-content').empty();
+  getMovies();
+});
+$('#discover').click(() => {
+  page = 1;
+  get_URL = discover;
+  $('a').removeClass('active');
+  $('#discover').addClass('active');
+  $('#api-content').empty();
+  getMovies();
+});
+$('#random').click(() => {
+  page = random_page;
+  $('#random').addClass('active');
+  $('#api-content').empty();
+  getMovies();
+});

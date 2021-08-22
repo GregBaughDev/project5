@@ -4,7 +4,7 @@
   --font-family: 'Rubik', 'Helvetica', 'Arial', sans-serif;
   --font-heading: 'Josefin Sans', sans-serif;
   --highlight: orange;
-  --background-main: #000;
+  --background-main: #202731;
 }
 
 *,
@@ -14,9 +14,8 @@
   padding: 0;
 }
 
-body {
-  background: url(https://www.transparenttextures.com/patterns/church.png);
-  background: var(--background-main);
+.body {
+  background-image: url(/assets/church.png);
   font-family: var(--font-family);
 }
 
@@ -53,8 +52,9 @@ h3 {
   opacity: 1;
 }
 
-.movie-div img:hover {
+.movie-div:hover {
   cursor: pointer;
+  transform: scale(1.05);
   box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
 }
 
@@ -116,6 +116,7 @@ h3 {
 }
 
 .navbar .btn:hover {
+  transform: translate(.5px, 1px);
   background: var(--highlight);
   border-color: var(--highlight);
 }
