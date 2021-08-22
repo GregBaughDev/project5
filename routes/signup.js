@@ -61,6 +61,7 @@ router
                           pass: '45vKFHFPatDx567R9R'
                       },
                   })
+                  res.redirect('/login')
                   let info = await transporter.sendMail({
                       from: "Cinema <movies@cinema.com>",
                       to: `${first} ${last} <${email}`,
@@ -70,7 +71,6 @@ router
                   })
                   console.log("Message sent: %s", info.messageId);
                   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-                  res.render('pages/login')
               })
               .catch((e) => {
                   console.log(e)

@@ -4,9 +4,9 @@ const bcrypt = require("bcrypt");
 
 function initialize(passport) {
   const authenticateUser = (email, password, done) => {
-    console.log(email, password);
     db.oneOrNone('SELECT * FROM users WHERE email = $1', [email])
       .then(async (user) => {
+        console.log(user)
         if (!user) return done(null, false);
         if (user.is_confirmed != 1) done(null, false);        
         bcrypt.compare(password, user.password, (err, isMatch) => {
@@ -24,6 +24,7 @@ function initialize(passport) {
       });
   };
   passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+  //  TODO: Research serialize session-storage
   passport.serializeUser((user, done) => done(null, user))
   passport.deserializeUser((user, done) => done(null, user))
 }

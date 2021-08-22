@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const passport = require("passport");
 const session = require("express-session");
@@ -6,11 +7,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 /// Session Middleware
-app.use(session ({
+app.use(session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
-}))
+  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 1 Day
+}));
 
 // Passport.js
 const initializePassport = require("./passportConfig");
@@ -18,10 +20,11 @@ initializePassport(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// set locals variable when authenticated
+// Set login variable when authenticated
 app.use(function (req, res, next) {
   res.locals.login = req.isAuthenticated();
-  next(); });
+  next(); 
+});
 
 // require routes
 const homeRouter = require('./routes/home');
@@ -51,6 +54,7 @@ app.use('/movies', moviesRouter);
 app.use("/email", emailRouter)
 
 
+// TODO: REMOVE
 // Test passport
 app.get('/test', function (req, res) {
   if(!req.user) return res.send("Not logged in")

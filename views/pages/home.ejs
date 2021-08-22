@@ -11,9 +11,12 @@
           <% } %>
           </select>
       </div>
-      <a role="button" class="btn btn-outline-primary" href="/">Top</a>
-      <a role="button" class="btn btn-outline-primary" href="/">Now Playing</a>
-      <a role="button" class="btn btn-outline-primary" href="/">Discover</a>
+      <a role="button" id="top" class="btn btn-outline-primary">Top</a>
+      <a role="button" id="now" class="btn btn-outline-primary">Now Playing</a>
+      <a role="button" id="discover" class="btn btn-outline-primary">Discover</a>
+      <% if (login) { %>
+        <a role="button" id="random" class="btn btn-outline-primary">Random</a>
+      <% } %>
       <div class="nav-link">
         <input type="search" class="form-control rounded text-center search" placeholder="Search" aria-label="Search"
         aria-describedby="search-addon" />
@@ -24,7 +27,7 @@
       <% if (login) { %>
         <h2>Welcome Back</h2>
       <% } else { %> 
-        <h2>Login to rate movies and grow your watchlist!</h2>
+        <h2>Login to rate movies, discover hidden gems and grow your watchlist!</h2>
       <% } %> 
     </div>
     <div id="api-content" class="d-flex align-items-center flex-wrap justify-content-center mb-5"></div>
