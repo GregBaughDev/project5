@@ -1,0 +1,18 @@
+<%- include('./partials/head') %>
+<%- include('./partials/header') %>
+<div class='container w-75 center-div'>
+    <div class='container w-20 border p-5'>
+        <h2 class='text-center my-2'>Forgot your password?</h2>
+        <form action="/email/reset" method="POST">
+            <section class="form-group my-2">
+                <label for="email">Please enter your email:</label>
+                <input class='form-control' type="email" name="email" id="email" required>
+            </section>
+            <section class="form-group my-3 d-flex justify-content-center">
+                <button class="btn btn-style">Submit</button>
+            </section>
+        </form>
+    </div>
+</div>
+  <script>$('title').text(`Cinémas Pathé Gaumont - Reset Password`)</script>
+<%- include('./partials/footer') %>

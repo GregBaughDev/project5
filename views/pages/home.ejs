@@ -1,12 +1,38 @@
   <%- include('./partials/head') %>
   <%- include('./partials/header') %>
-    <main class="main">
-      <div class ="hero text-center">
-      <h1 class="mt-5 display-1">JQuery + TMDB API</h1>
-      <h2 id="page-title" class="mt-5">Now Playing:</h2>
+  <main class="main justify-content-center container">
+    <nav class="navbar search bg-light">
+      <div class="navbar-brand">
+        <label for="genre" class="sr-only">Select a genre</label>
+          <select name="genre" class="form-select text-center" id="genre">
+              <option>--Select a genre--</option>
+          <% for(let genre in genres) { %>
+              <option><%= genre %></option>
+          <% } %>
+          </select>
+      </div>
+      <a role="button" id="top" class="btn btn-outline-primary">Top</a>
+      <a role="button" id="now" class="btn btn-outline-primary">Now Playing</a>
+      <a role="button" id="discover" class="btn btn-outline-primary">Discover</a>
+      <% if (login) { %>
+        <a role="button" id="random" class="btn btn-outline-primary">Random</a>
+      <% } %>
+      <div class="nav-link">
+        <input type="search" class="form-control rounded text-center search" placeholder="Search" aria-label="Search"
+        aria-describedby="search-addon" />
+      </div>
+    </nav>
+    <div class ="hero text-center mt-5 ">
+      <h1 class="display-1">MOVIE RATER</h1>
+      <% if (login) { %>
+        <h2>Welcome Back</h2>
+      <% } else { %> 
+        <h2>Login to rate movies, discover hidden gems and grow your watchlist!</h2>
+      <% } %> 
     </div>
-      <!-- Main Content -->
-      <div id="api-content"></div>
+    <div id="api-content" class="d-flex align-items-center flex-wrap justify-content-center mb-5"></div>
+    </main>
+    <aside>
       <!-- Pagination controls -->
       <a id="prev-page"  class="carousel-control-prev prev-page" title="Arrow keys also change pages" role="button" >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -16,20 +42,7 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
-    </main>
-    <nav class="navbar search bg-light">
-      <div class="navbar-brand">
-        <label for="genre" class="sr-only">Select a genre</label>
-          <select name="genre" class="form-select text-center" id="genre">
-              <option>--Select a genre--</option>
-              <% for(let genre in genres) { %>
-              <option><%= genre %></option>
-          <% } %>
-          </select>
-      </div>
-      <div class="nav-link">
-        <input type="search" class="form-control rounded text-center" placeholder="Search" aria-label="Search"
-        aria-describedby="search-addon" />
-      </div>
-    </nav>
+    </aside>
+    <script src="/js/app.js" defer></script>
+    <script src="/js/pages.js" defer></script>
 <%- include('./partials/footer') %>
