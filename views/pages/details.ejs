@@ -4,19 +4,27 @@
     <div class="justify-content-center  m-5 d-flex flex-column align-items-center">
         <div id="movie-details" class="container d-flex flex-column align-items-center"></div>
         <div class="border border-primary p-3 w-50 my-4 d-flex flex-column align-items-center">
-            <form id="rating" class="d-flex flex-column align-items-center w-50">
-                <label for="rating" class="form-label">Leave a rating </label>
-                <input type="range" class="form-range" id="rating" value="5" min="1" max="10">
-                <button class="btn btn-primary" type="submit">Rate!</button>
-                <h4 class="my-2 text-center" id="rating-dsp">Your rating is: 5</h4>
-            </form>
+            <% if(!loggedIn) { %>
+                <h4>Log in to review this movie and add to your watchlist</h4>
+            <% } else if(loggedIn && userRating) { %>
+                <h4 class="my-2 text-center" id="rating-dsp">Your rating is: <%= userRating %> </h4>
+            <% } else if(loggedIn && !userRating) { %>
+                <form id="rating" action="/movies/<%= id %>/rate" method="POST" class="d-flex flex-column align-items-center w-50">
+                    <label for="rating" class="form-label">Leave a rating </label>
+                    <input type="range" class="form-range" name="rating" id="rating" value="5" min="1" max="10">
+                    <button class="btn btn-primary" type="submit">Rate!</button>
+                    <h4 class="my-2 text-center" id="rating-dsp">Your rating is: 5</h4>
+                </form>
+            <% } %>
         </div>
+        <% if(loggedIn) { %>
         <div class="w-50 my-4 d-flex flex-column align-items-center">
-            <form id="watchlist">
+            <form id="watchlist" >
                 <label for="watchlist-add" class="form-label">Add to my watch list</label>
                 <button class="btn btn-warning">Add!</button> 
             </form>
         </div>
+        <% } %>
     </div>
 </main>
     <script> const movie_id = <%= id %> </script>

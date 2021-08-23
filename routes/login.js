@@ -8,14 +8,12 @@ router
   .get(checkNotAuthenticated, (req, res) => {
     res.render('pages/login');
   })
-  .post(
-    checkNotAuthenticated,
+  .post(checkNotAuthenticated,
     passport.authenticate('local', {
       successRedirect: '/dashboard',
       failureRedirect: '/login',
-    })
-  );
-
+    }))
+    
 router.get('/logout', (req, res) => {
   req.logout();
   console.log('You have logged out successfully');
