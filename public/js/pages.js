@@ -25,3 +25,15 @@ document.onkeyup = function (evt) {
       break;
   }
 };
+
+// Updates pages in footer and calculates random page for hidden gem feature
+function showPages(data) {
+  random_page = Math.floor(Math.random() * data.total_pages) + 1;
+  $('#page').text(`Page ${data.page}/${data.total_pages}`);
+  if (data.page === 1) {
+    $('.prev-page').hide();
+    return;
+  }
+  $('.prev-page').show();
+  if (data.page === data.total_pages) return $('.next-page').hide();
+}

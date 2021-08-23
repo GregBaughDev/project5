@@ -9,6 +9,7 @@
     "create-db": "psql -U postgres -f sql/create-db.sql",
     "create-tables": "psql -U postgres -d cinema -f sql/create-tables.sql",
     "seed-tables": "psql -U postgres -d cinema -f sql/seed-tables.sql",
+    "seed-tables-big": "psql -U postgres -d cinema -f sql/seed-tables-big.sql",
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "repository": {

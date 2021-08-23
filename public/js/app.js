@@ -28,9 +28,8 @@ const genres = {
   War: 10752,
   Western: 37,
 };
-// TODO: Add TOP RATED
+
 function apiCall(get_URL) {
-  console.log(get_URL);
   return $.getJSON(`${base_URL}${get_URL}${api_key}&page=${page}`);
 }
 
@@ -80,7 +79,6 @@ $(document).ready(() => {
   getMovies();
 });
 
-
 // When a genre is selected from the drop down the following is called
 $('#genre').change((e) => {
   $('.genre-search').remove();
@@ -88,17 +86,6 @@ $('#genre').change((e) => {
   $('#prev-page').hide();
   searchMovies(genres[e.target.value]);
 });
-// Updates pages in footer and calculates random page for hidden gem feature
-function showPages(data) {
-  random_page = Math.floor(Math.random() * data.total_pages) + 1;
-  $('#page').text(`Page ${data.page}/${data.total_pages}`);
-  if (data.page === 1) {
-    $('.prev-page').hide();
-    return;
-  }
-  $('.prev-page').show();
-  if (data.page === data.total_pages) return $('.next-page').hide();
-}
 
 // Creates cards as movieHTML and appends to api-content on home
 function makeCard(movie) {
@@ -109,20 +96,47 @@ function makeCard(movie) {
     .append(
       `<a href="/movies/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${movie.title} poster "onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`
     ); // If poster load error: load blank.jpg
-  // TODO: show logged in user's rating of this move in star format
-  // .append(`<span id="star" class="rating">${yourrating}</span>`);
-
-  //  Get community rating by fetching route with SQL for average, convert to percentage and add if community rating exists add badge to poster
-  $.get(`http://localhost:3000/rating/${movie.id}`, function (data) {
-    let rating = Math.round(data.avg * 10);
-    if (data.avg !== null) {
-      $(movieHTML).prepend(`<div id="score">${rating}%</div>`);
+  $.get(`http://localhost:3000/rating/${movie.id}/user`, function (data) {
+    if (data.length === 1 ) {
+      // Convert score to out of 5
+      let score = data[0].rating
+      score%2==0 ? stars = '★'.repeat(score / 2) : stars = '★'.repeat((score / 2)) + '½'
+      $(movieHTML).append(`<div id="star" class="rating">${stars}</div>`);
     }
-    $('#api-content').append(movieHTML);
-  });
+  })
+  //  Get community rating by fetching route with SQL for average, convert to percentage and add if community rating exists add badge to poster
+  $.get(`http://localhost:3000/rating/`, function (data) {
+    let find = data.find(item => {return item.movie_id == movie.id})
+    if (find) {
+      let rating = Math.round(find.avg * 10);
+      let votes = find.count
+      $(movieHTML).prepend(`<div id="score" class="score">${rating}%</div>`);
+      $(movieHTML).prepend(`<div class="score-count score">${votes} vote/s</div>`);
+    }
+  })
+  $('#api-content').append(movieHTML);
 }
 
 // Changes API call route and highlights button
+$('#top').click(() => {
+  $('a').removeClass('active');
+  $('#top').addClass('active');
+  $('#next-page').hide();
+  $('#prev-page').hide();
+  $('#api-content').empty();
+  $.get(`http://localhost:3000/top/`, function (data) {
+    for(let i = 0; i< data.length; i++){
+      $.getJSON(`${base_URL}/movie/${data[i].movie_id}${api_key}`)
+        .then((data) => {
+          makeCard(data)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+    }
+  })
+})
+
 $('#now').click(() => {
   page = 1;
   get_URL = now;

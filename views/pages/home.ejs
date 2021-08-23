@@ -1,7 +1,7 @@
   <%- include('./partials/head') %>
   <%- include('./partials/header') %>
   <main class="main justify-content-center container">
-    <nav class="navbar search bg-light">
+    <nav class="navbar search bg-light px-3">
       <div class="navbar-brand">
         <label for="genre" class="sr-only">Select a genre</label>
           <select name="genre" class="form-select text-center" id="genre">
@@ -11,7 +11,7 @@
           <% } %>
           </select>
       </div>
-      <a role="button" id="top" class="btn btn-outline-primary">Top</a>
+      <a role="button" id="top" class="btn btn-outline-primary">Top 20</a>
       <a role="button" id="now" class="btn btn-outline-primary">Now Playing</a>
       <a role="button" id="discover" class="btn btn-outline-primary">Discover</a>
       <% if (login) { %>
@@ -45,4 +45,5 @@
     </aside>
     <script src="/js/app.js" defer></script>
     <script src="/js/pages.js" defer></script>
+    <script src="/js/views.js" defer></script>
 <%- include('./partials/footer') %>
