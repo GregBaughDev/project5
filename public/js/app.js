@@ -2,35 +2,29 @@ const base_URL = 'https://api.themoviedb.org/3';
 const api_key = '?api_key=12890aac4bd3d481725b4e373193a5bf';
 const image_URL = 'https://image.tmdb.org/t/p/w185';
 
-const now = '/movie/now_playing';
-const discover = '/discover/movie/';
+genres = {
+    Action: 28,
+    Adventure: 12,
+    Animation: 16,
+    Comedy: 35,
+    Crime: 80,
+    Documentary: 99,
+    Drama: 18,
+    Family: 10751,
+    Fantasy: 14,
+    History: 36,
+    Horror: 27,
+    Music: 10402,
+    Mystery: 9648,
+    Romance: 10749,
+    "Sci Fi": 878,
+    "TV Movie": 10770,
+    Thriller: 53,
+    War: 10752,
+    Western: 37
+}
 
-let page = 1;
-
-const genres = {
-  Action: 28,
-  Adventure: 12,
-  Animation: 16,
-  Comedy: 35,
-  Crime: 80,
-  Documentary: 99,
-  Drama: 18,
-  Family: 10751,
-  Fantasy: 14,
-  History: 36,
-  Horror: 27,
-  Music: 10402,
-  Mystery: 9648,
-  Romance: 10749,
-  'Sci Fi': 878,
-  'TV Movie': 10770,
-  Thriller: 53,
-  War: 10752,
-  Western: 37,
-};
-// TODO: Add TOP RATED
 function apiCall(get_URL) {
-  console.log(get_URL);
   return $.getJSON(`${base_URL}${get_URL}${api_key}&page=${page}`);
 }
 
@@ -71,35 +65,6 @@ const searchMovies = (genre_id) => {
     });
 };
 
-// On document ready the getMovies function is called
-$(document).ready(() => {
-  // Default is Now playing
-  get_URL = now;
-  $('a').removeClass('active');
-  $('#now').addClass('active');
-  getMovies();
-});
-
-
-// When a genre is selected from the drop down the following is called
-$('#genre').change((e) => {
-  $('.genre-search').remove();
-  $('#next-page').hide();
-  $('#prev-page').hide();
-  searchMovies(genres[e.target.value]);
-});
-// Updates pages in footer and calculates random page for hidden gem feature
-function showPages(data) {
-  random_page = Math.floor(Math.random() * data.total_pages) + 1;
-  $('#page').text(`Page ${data.page}/${data.total_pages}`);
-  if (data.page === 1) {
-    $('.prev-page').hide();
-    return;
-  }
-  $('.prev-page').show();
-  if (data.page === data.total_pages) return $('.next-page').hide();
-}
-
 // Creates cards as movieHTML and appends to api-content on home
 function makeCard(movie) {
   const movieHTML = $('<div class="movie-div">')
@@ -109,39 +74,37 @@ function makeCard(movie) {
     .append(
       `<a href="/movies/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${movie.title} poster "onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`
     ); // If poster load error: load blank.jpg
-  // TODO: show logged in user's rating of this move in star format
-  // .append(`<span id="star" class="rating">${yourrating}</span>`);
-
-  //  Get community rating by fetching route with SQL for average, convert to percentage and add if community rating exists add badge to poster
-  $.get(`http://localhost:3000/rating/${movie.id}`, function (data) {
-    let rating = Math.round(data.avg * 10);
-    if (data.avg !== null) {
-      $(movieHTML).prepend(`<div id="score">${rating}%</div>`);
+  $.get(`http://localhost:3000/rating/${movie.id}/user`, function (data) {
+    if (data.length === 1 ) {
+      // Convert score to out of 5
+      let score = data[0].rating
+      score%2==0 ? stars = '★'.repeat(score / 2) : stars = '★'.repeat((score / 2)) + '½'
+      $(movieHTML).append(`<div id="star" class="rating">${stars}</div>`);
     }
-    $('#api-content').append(movieHTML);
-  });
+  })
+  //  Get community score by fetching route with SQL for average, convert to percentage and add if community rating exists add badge to poster
+  $.get(`http://localhost:3000/rating/`, function (data) {
+    let find = data.find(item => {return item.movie_id == movie.id})
+    if (find) {
+      let score = find.avg * 10;
+      let votes = find.count
+      $(movieHTML).prepend(`<div id="score" class="score">${score}%</div>`);
+      $(movieHTML).prepend(`<div class="score-count score">${votes} vote/s</div>`);
+    }
+  })
+  $('#api-content').append(movieHTML);
 }
 
-// Changes API call route and highlights button
-$('#now').click(() => {
-  page = 1;
-  get_URL = now;
-  $('a').removeClass('active');
-  $('#now').addClass('active');
-  $('#api-content').empty();
-  getMovies();
-});
-$('#discover').click(() => {
-  page = 1;
-  get_URL = discover;
-  $('a').removeClass('active');
-  $('#discover').addClass('active');
-  $('#api-content').empty();
-  getMovies();
-});
-$('#random').click(() => {
-  page = random_page;
-  $('#random').addClass('active');
-  $('#api-content').empty();
-  getMovies();
+let page = 1
+function showPages(data) {
+  random_page = Math.floor(Math.random() * data.total_pages) + 1;
+  $('#page').text(`Page ${data.page}/${data.total_pages}`);
+  if (data.page === data.total_pages) return $('#more').hide();
+
+}
+
+$('#more').click(() => {
+  page = page + 1;
+  getMovies(page);
+  $('title').text(`Cinémas Pathé Gaumont - Page ${page}`);
 });

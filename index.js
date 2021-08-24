@@ -26,6 +26,12 @@ app.use(function (req, res, next) {
   next(); 
 });
 
+// Set API key
+app.use(function (req, res, next) {
+  res.locals.key = process.env.SECRET;
+  next(); 
+});
+
 // require routes
 const homeRouter = require('./routes/home');
 const loginRouter = require('./routes/login')

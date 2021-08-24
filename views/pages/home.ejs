@@ -1,7 +1,7 @@
   <%- include('./partials/head') %>
   <%- include('./partials/header') %>
-  <main class="main justify-content-center container">
-    <nav class="navbar search bg-light">
+  <main class="main justify-content-center container-lg">
+    <nav class="navbar search bg-light px-3">
       <div class="navbar-brand">
         <label for="genre" class="sr-only">Select a genre</label>
           <select name="genre" class="form-select text-center" id="genre">
@@ -11,7 +11,7 @@
           <% } %>
           </select>
       </div>
-      <a role="button" id="top" class="btn btn-outline-primary">Top</a>
+      <a role="button" id="top" class="btn btn-outline-primary">Top 20</a>
       <a role="button" id="now" class="btn btn-outline-primary">Now Playing</a>
       <a role="button" id="discover" class="btn btn-outline-primary">Discover</a>
       <% if (login) { %>
@@ -31,18 +31,13 @@
       <% } %> 
     </div>
     <div id="api-content" class="d-flex align-items-center flex-wrap justify-content-center mb-5"></div>
+    <div class="d-flex align-items-center flex-wrap justify-content-center mb-5">
+      <button id="more" type="button" class="btn btn-outline-primary" id='more'>Load More</button>
+    </div>
+    <div id="to-top" class="d-flex align-items-center flex-wrap justify-content-center mb-5 px-5 fixed-bottom">
+      <a class="btn btn-outline-primary mb-5 p-3" href="#" role="button"> ↑ </a>
+    </div>
     </main>
-    <aside>
-      <!-- Pagination controls -->
-      <a id="prev-page"  class="carousel-control-prev prev-page" title="Arrow keys also change pages" role="button" >
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a id="next-page" class="carousel-control-next next-page" title="Arrow keys also change pages" role="button">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </aside>
     <script src="/js/app.js" defer></script>
-    <script src="/js/pages.js" defer></script>
+    <script src="/js/views.js" defer></script>
 <%- include('./partials/footer') %>
