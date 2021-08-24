@@ -14,19 +14,20 @@ router
 router
   .route(`/top/`)
   .get((req, res) => {
-    db.any('SELECT COUNT(rating), AVG(rating), movie_id FROM ratings GROUP BY movie_id ORDER BY AVG(rating) desc limit 20')
-    .then((score) => {
-      res.send(score)
+    db.any('SELECT COUNT(rating), AVG(rating)::numeric(4, 1), movie_id FROM ratings GROUP BY movie_id ORDER BY AVG(rating) desc limit 20')
+    .then((top) => {
+      res.json(top)
     })
     .catch(e => {
       console.log(e)
       res.send('error')
     })
 })
+// Route to get vote count, community score and movie_id
 router
   .route('/rating/')
   .get((req, res) => {
-    db.any('SELECT COUNT(rating), AVG(rating), movie_id FROM ratings GROUP BY movie_id')
+    db.any('SELECT COUNT(rating), AVG(rating)::numeric(4, 1), movie_id FROM ratings GROUP BY movie_id')
   .then((score) => {
     res.send(score);
   })
@@ -36,13 +37,14 @@ router
   })
 })
 
+// route to get user's score for this move
 router
   .route('/rating/:id/user')
   .get(checkAuthenticated, (req, res) => {
     const {id} = req.params
       db.any("SELECT rating FROM ratings WHERE movie_id = $1 AND user_id = $2", [id, req.user.user_id])
-      .then((score) => {
-        res.send(score);
+      .then((rating) => {
+        res.send(rating);
       })
       .catch(e => {
         console.log(e)

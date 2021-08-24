@@ -29,6 +29,7 @@ h3 {
   text-shadow: 5px 5px var(--highlight);
 }
 
+
 /* MOVIE CARDS */
 .movie-div {
   position: relative;
@@ -94,6 +95,7 @@ h3 {
   font-size: 20px;
   border: 1px solid var(--background-main);
   position: absolute;
+  z-index: 4;
 
 }
 
@@ -170,3 +172,20 @@ footer {
   width: 200%;
   filter: invert(100%);
 }
+
+#to-top{
+  width: min-content;
+  margin-left: auto;
+}
+
+#to-top .btn {
+  color: white;
+  background-color: var(--highlight);
+  border-color: white;
+}
+#to-top .btn:hover {
+  color: var(--highlight);
+  background-color: transparent;
+  border-color: var(--highlight);
+}
+
