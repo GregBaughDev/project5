@@ -2,9 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const passport = require("passport");
 const session = require("express-session");
+const methodOverride = require("method-override");
 const app = express();
 
 const port = process.env.PORT || 3000;
+
+app.use(methodOverride('_method'))
 
 /// Session Middleware
 app.use(session({
