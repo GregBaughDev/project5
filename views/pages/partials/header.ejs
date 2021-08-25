@@ -3,7 +3,7 @@
         <a class="navbar-brand" href="/">Pathé Gaumont</a>
         <% if (login) { %>
         <div>
-        <a role="button" id='dashboard' class="btn btn-outline-light profile" href="/dashboard">Profile</a>
+        <a href="/dashboard"><img class="rounded-circle mx-3" id='profile' src="<%=avatar%>"></a>
         <a role="button" id='login' class="btn btn-outline-primary log" href="/login/logout">Log Out</a>
         </div>
         <% } else { %> 

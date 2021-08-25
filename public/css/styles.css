@@ -189,3 +189,24 @@ footer {
   border-color: var(--highlight);
 }
 
+#profile {
+  width: 3rem;
+  height: 3rem;
+  object-fit:cover;
+  border: 1px solid var(--highlight);
+}
+
+#profile:hover{
+  transform: translate(.5px, 1px);
+}
+
+.login-page{
+  background-image: url(/assets/cinema-4609877_960_720.webp);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#login-form, #signup-form{
+  background-color: #FFF;
+  background-image: url(/assets/church.png);
+}

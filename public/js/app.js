@@ -103,6 +103,19 @@ function showPages(data) {
 
 }
 
+$(window).scroll(function() {
+  if(page === 3){
+    $('#more').text("Enable Infinite Scroll")
+    $( "footer" ).addClass( "position-fixed" );
+  }
+  if($(window).scrollTop() == $(document).height() - $(window).height() && page > 3) {
+    $('#more').hide()
+    page = page + 1;
+    getMovies(page);
+    $('title').text(`Cinémas Pathé Gaumont - Page ${page}`);
+  }
+});
+
 $('#more').click(() => {
   page = page + 1;
   getMovies(page);

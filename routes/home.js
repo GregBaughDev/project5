@@ -4,15 +4,22 @@ const genres = require('../helpers/genres');
 const db = require('../conn/conn');
 const { checkAuthenticated} = require('../helpers/auth');
 
+
 router
   .route('/')
   .get((req, res) => {
-  res.render('pages/home', { genres, login: req.isAuthenticated() });
-});
+    let loggedIn = false
+    req.user ? loggedIn = true : null
+    if(loggedIn){
+      res.render('pages/home', { genres, loggedIn})
+    } else {
+      res.render('pages/home', { genres, loggedIn})} 
+  })
+
 
 // Route to get community score
 router
-  .route(`/top/`)
+  .route(`/top`)
   .get((req, res) => {
     db.any('SELECT COUNT(rating), AVG(rating)::numeric(4, 1), movie_id FROM ratings GROUP BY movie_id ORDER BY AVG(rating) desc limit 20')
     .then((top) => {
@@ -25,7 +32,7 @@ router
 })
 // Route to get vote count, community score and movie_id
 router
-  .route('/rating/')
+  .route('/rating')
   .get((req, res) => {
     db.any('SELECT COUNT(rating), AVG(rating)::numeric(4, 1), movie_id FROM ratings GROUP BY movie_id')
   .then((score) => {

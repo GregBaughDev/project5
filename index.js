@@ -4,6 +4,8 @@ const passport = require("passport");
 const session = require("express-session");
 const app = express();
 
+const image_URL = 'https://image.tmdb.org/t/p/w185/';
+
 const port = process.env.PORT || 3000;
 
 /// Session Middleware
@@ -20,9 +22,12 @@ initializePassport(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Set login variable when authenticated
+// Set login and avatar variable when authenticated
 app.use(function (req, res, next) {
   res.locals.login = req.isAuthenticated();
+  if(req.isAuthenticated()){
+    res.locals.avatar = image_URL + req.user.avatar
+    }
   next(); 
 });
 

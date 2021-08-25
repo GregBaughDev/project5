@@ -3,9 +3,8 @@ const router = express.Router();
 const db = require('../conn/conn');
 const bcrypt = require('bcrypt');
 const Valid = require('../class/validator')
-const {v4: uuidv4} = require('uuid')
 const nodemailer = require('nodemailer')
-const { checkAuthenticated, checkNotAuthenticated } = require('../helpers/auth')
+const { checkNotAuthenticated } = require('../helpers/auth')
 
 // SIGN UP
 
@@ -15,7 +14,8 @@ router
       res.render('pages/signup')
   })
   .post(checkNotAuthenticated, async (req, res) => {
-      const {first, last, email, pword, pwordcheck} = req.body
+      const {avatar, username, email, pword, pwordcheck} = req.body
+      console.log(req.body)
       // Valid is a class containing regexs and tests
       const tests = new Valid
       
@@ -49,7 +49,7 @@ router
           const saltRounds = 10
           const salt = bcrypt.genSaltSync(saltRounds)
           const hash = bcrypt.hashSync(pword, salt)
-          db.one("INSERT INTO users (email, password) VALUES ($1, $2) RETURNING user_id", [email.toLowerCase(), hash])
+          db.one("INSERT INTO users(avatar, username, email, password) VALUES ($1, $2, $3, $4) RETURNING user_id", [avatar, username, email.toLowerCase(), hash])
               .then(async (data) => {
                   const { user_id } = data
                   let transporter = nodemailer.createTransport({
@@ -61,14 +61,14 @@ router
                           pass: '45vKFHFPatDx567R9R'
                       },
                   })
-                  res.redirect('/login')
                   let info = await transporter.sendMail({
                       from: "Cinema <movies@cinema.com>",
-                      to: `${first} ${last} <${email}`,
+                      to: `${username} ${email}`,
                       subject: "Please confirm your account",
                       text: "Hi there! To start using your account, please click the activation link",
                       html: `<h2>Hi there!</h2><p>To start using your account, please click the activation link</p><a href='http://localhost:3000/email/${user_id}'>Link!</a>`,
                   })
+                  res.redirect('/login')
                   console.log("Message sent: %s", info.messageId);
                   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
               })

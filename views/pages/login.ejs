@@ -1,14 +1,25 @@
-<%- include('./partials/head') %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinémas Pathé Gaumont</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+<body id='#' class="login-page">
 <%- include('./partials/header') %>
 
-    <main class="main">
       <div class='container w-75 center-div'>
-        <div class='container w-20 border p-5'>
+        <div id="login-form" class='container w-20 border p-5'>
           <h2 class='text-center'>Please Log In</h2>
           <form action="/login" method="POST">
             <div class="form-group my-2">
-              <label for="email">E-Mail:</label>
-              <input type="email" name="email" id="email" required class='form-control' placeholder=" " autocomplete="username" value="admin@admin">
+              <label for="username">Username:</label>
+              <input type="text" name="username" id="username" required class='form-control' placeholder=" " autocomplete="username" value="admin">
             </div>
             <div class="form-group my-2">
               <label for="password">Password:</label>
@@ -25,6 +36,6 @@
           </div>
         </div>
       </div>
-    </main>
+</main>
   <script>$('title').text(`Cinémas Pathé Gaumont - Log In`)</script>
 <%- include('./partials/footer') %>

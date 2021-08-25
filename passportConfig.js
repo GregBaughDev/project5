@@ -3,8 +3,8 @@ const db = require('./conn/conn');
 const bcrypt = require("bcrypt");
 
 function initialize(passport) {
-  const authenticateUser = (email, password, done) => {
-    db.oneOrNone('SELECT * FROM users WHERE email = $1', [email])
+  const authenticateUser = (username, password, done) => {
+    db.oneOrNone('SELECT * FROM users WHERE username = $1', [username])
       .then(async (user) => {
         console.log(user)
         if (!user) return done(null, false);
@@ -23,7 +23,7 @@ function initialize(passport) {
         console.log(e);
       });
   };
-  passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
+  passport.use(new LocalStrategy({ usernameField: 'username' }, authenticateUser))
   //  TODO: Research serialize session-storage
   passport.serializeUser((user, done) => done(null, user))
   passport.deserializeUser((user, done) => done(null, user))
