@@ -1,6 +1,6 @@
 const base_URL = 'https://api.themoviedb.org/3';
 const api_key = '?api_key=12890aac4bd3d481725b4e373193a5bf';
-const image_URL = 'https://image.tmdb.org/t/p/w185'
+const image_URL = 'https://image.tmdb.org/t/p/w185/'
 
 function randomMovie(){
     let rndMovie = Math.floor(100000 + Math.random() * 900000);

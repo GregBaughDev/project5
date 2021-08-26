@@ -63,3 +63,20 @@ $('#random').click(() => {
   $('#more').show();
   getMovies();
 });
+
+$('#my-ratings').click(() => {
+  $('#api-content').removeClass('d-none');
+  $('#api-content').empty();
+  $.get(`http://localhost:3000/dashboard/ratings/`, function (data) {
+    for(let i = 0; i< data.length; i++){
+      $.getJSON(`${base_URL}/movie/${data[i].movie_id}${api_key}`)
+        .then((data) => {
+          let page = true
+          makeCard(data, page)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+    }
+  })
+})

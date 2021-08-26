@@ -8,18 +8,22 @@ const image_URL = 'https://image.tmdb.org/t/p/w185/'
 router
     .route('/')
     .get(checkAuthenticated,(req, res) => {
+        
         res.render('pages/dashboard', {username: req.user.username})
     })
-    // .post(checkAuthenticated,(req, res) => {
-    //     db.one("INSERT INTO users (privacy) VALUES ($1, $2, $3) RETURNING user_id", [privacy])
-    //     .then((e) => {
-    //         console.log(e)
-    //     })
-                
-    //     .catch((e) => {
-    //         console.log(e)
-    //     })  
-    // })
+
+    router
+    .route('/ratings')
+    .get(checkAuthenticated,(req, res) => {
+        db.any("SELECT * FROM ratings WHERE user_id = $1 ORDER BY rating desc", [req.user.user_id])
+        .then((ratings) => {
+            res.json(ratings)
+          })
+          .catch(e => {
+            console.log(e)
+            res.send('error')
+          })
+      })
 router
     .route('/:id')
     .get((req, res) => {

@@ -1,11 +1,14 @@
 <%- include('./partials/head') %>
 <%- include('./partials/header') %>
-    <div class="m-5 d-flex flex-column align-items-center justify-content-center">
-        <img class="rounded-circle" style="width: 120px;height: 120px;object-fit:cover" src="<%=avatar%>">
-        <div class="border border-primary p-3 w-50 my-4 d-flex flex-column align-items-center">
-            <h1> Welcome back <%=username%>!</h1>
-            <h2> Here are your top rated movies:</h2>
-            <a href="/">Go to movies</a>
+    <main class="main justify-content-center container-lg">
+        <div class ="hero text-center mt-5 ">
+            <img class="rounded-circle" style="width: 120px;height: 120px;object-fit:cover" src="<%=avatar%>">
+            <h2 class="display-2"> Welcome back <%=username%>!</h2>
+            <a role="button" id="my-ratings" class="btn btn-outline-primary">My Top Ratings</a>
+            <a href="/" role="button" id="my-ratings" class="btn btn-outline-primary">Go to movies</a>
         </div>
-    </div>  
+        <div id="api-content" class="d-flex align-items-center flex-wrap justify-content-center mb-5 d-none"></div>
+    </main>
+    <script src="/js/app.js" defer></script>
+    <script src="/js/views.js" defer></script>
 <%- include('./partials/footer') %>

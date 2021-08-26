@@ -66,7 +66,7 @@ const searchMovies = (genre_id) => {
 };
 
 // Creates cards as movieHTML and appends to api-content on home
-function makeCard(movie) {
+const makeCard = (movie, page) => {
   const movieHTML = $('<div class="movie-div">')
     .append(
       `<span class="movie-title-tooltip" id="${movie.id}">${movie.title}</span>`
@@ -74,14 +74,16 @@ function makeCard(movie) {
     .append(
       `<a href="/movies/${movie.id}"><img src="${image_URL}${movie.poster_path}" alt="${movie.title} poster "onerror="this.onerror=''; this.src='./assets/blank.jpg'"></a>`
     ); // If poster load error: load blank.jpg
-  $.get(`http://localhost:3000/rating/${movie.id}/user`, function (data) {
-    if (data.length === 1 ) {
-      // Convert score to out of 5
-      let score = data[0].rating
-      score%2==0 ? stars = '★'.repeat(score / 2) : stars = '★'.repeat((score / 2)) + '½'
-      $(movieHTML).append(`<div id="star" class="rating">${stars}</div>`);
-    }
-  })
+  if(page){
+    $.get(`http://localhost:3000/rating/${movie.id}/user`, function (data) {
+      if (data.length === 1 ) {
+        let score = data[0].rating
+        score%2==0 ? stars = '★'.repeat(score / 2) : stars = '★'.repeat((score / 2)) + '½'
+        $(movieHTML).append(`<div id="star" class="rating">${stars}</div>`);
+      }
+    })
+    return $('#api-content').append(movieHTML);
+  }  
   //  Get community score by fetching route with SQL for average, convert to percentage and add if community rating exists add badge to poster
   $.get(`http://localhost:3000/rating/`, function (data) {
     let find = data.find(item => {return item.movie_id == movie.id})
