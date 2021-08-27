@@ -80,3 +80,19 @@ $('#my-ratings').click(() => {
     }
   })
 })
+
+$('#my-watchlist').click(() => {
+  $('#api-content').removeClass('d-none');
+  $('#api-content').empty();
+  $.get(`http://localhost:3000/dashboard/watchlist/`, function (data) {
+    for(let i = 0; i< data.length; i++){
+      $.getJSON(`${base_URL}/movie/${data[i].movie_id}${api_key}`)
+        .then((data) => {
+          makeCard(data)
+        })
+        .catch(e => {
+            console.log(e)
+        })
+    }
+  })
+})

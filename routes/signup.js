@@ -5,17 +5,20 @@ const bcrypt = require('bcrypt');
 const Valid = require('../class/validator')
 const nodemailer = require('nodemailer')
 const { checkNotAuthenticated } = require('../helpers/auth')
+const flash = require('express-flash');
+app = express();
+app.use(flash())
 
 // SIGN UP
 
 router
   .route('/')
   .get(checkNotAuthenticated, (req, res) => {
-      res.render('pages/signup')
+      let currData = false
+      res.render('pages/signup', {currData})
   })
   .post(checkNotAuthenticated, async (req, res) => {
       const {avatar, username, email, pword, pwordcheck} = req.body
-      console.log(req.body)
       // Valid is a class containing regexs and tests
       const tests = new Valid
       
@@ -39,11 +42,13 @@ router
       /* If the error object contains any errors the user is redirected to signup form, error objects 
       and current user data is passed back to be entered into input fields for better UX */
       for(let key in errors){
-          if(errors[key] != ""){
-              allTests = false
-              return res.render('pages/signup', {errors})
-          } 
-      }
+        if(errors[key] != ""){
+            allTests = false
+            const currData = req.body
+            return res.render('pages/signup', {currData, error: "Invalid details"})
+        } 
+    }
+
       // If all validations are passed the information is input to DB and user is redirected to login 
       if(allTests){
           const saltRounds = 10
@@ -68,7 +73,8 @@ router
                       text: "Hi there! To start using your account, please click the activation link",
                       html: `<h2>Hi there!</h2><p>To start using your account, please click the activation link</p><a href='http://localhost:3000/email/${user_id}'>Link!</a>`,
                   })
-                  res.redirect('/login')
+                  let link = nodemailer.getTestMessageUrl(info)
+                  res.render('pages/login', { success: "Account Created. Confirm Here!", link})
                   console.log("Message sent: %s", info.messageId);
                   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
               })

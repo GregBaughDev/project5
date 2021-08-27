@@ -76,11 +76,9 @@ const makeCard = (movie, page) => {
     ); // If poster load error: load blank.jpg
   if(page){
     $.get(`http://localhost:3000/rating/${movie.id}/user`, function (data) {
-      if (data.length === 1 ) {
-        let score = data[0].rating
+        let score = data.rating
         score%2==0 ? stars = '★'.repeat(score / 2) : stars = '★'.repeat((score / 2)) + '½'
         $(movieHTML).append(`<div id="star" class="rating">${stars}</div>`);
-      }
     })
     return $('#api-content').append(movieHTML);
   }  
@@ -94,11 +92,18 @@ const makeCard = (movie, page) => {
       $(movieHTML).prepend(`<div class="score-count score">${votes} vote/s</div>`);
     }
   })
+  $.get(`http://localhost:3000/rating/${movie.id}/user`, function (data) {
+    if (data.rating) {
+      $('.movie-div').addClass("watched")
+    }
+  })
   $('#api-content').append(movieHTML);
 }
 
+
+// Pagination
 let page = 1
-function showPages(data) {
+const showPages = (data) => {
   random_page = Math.floor(Math.random() * data.total_pages) + 1;
   $('#page').text(`Page ${data.page}/${data.total_pages}`);
   if (data.page === data.total_pages) return $('#more').hide();
@@ -112,6 +117,7 @@ $(window).scroll(function() {
   }
   if($(window).scrollTop() == $(document).height() - $(window).height() && page > 3) {
     $('#more').hide()
+    $('#more').text("Load More")
     page = page + 1;
     getMovies(page);
     $('title').text(`Cinémas Pathé Gaumont - Page ${page}`);

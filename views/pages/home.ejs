@@ -14,7 +14,7 @@
       <a role="button" id="top" class="btn btn-outline-primary">Top 20</a>
       <a role="button" id="now" class="btn btn-outline-primary">Now Playing</a>
       <a role="button" id="discover" class="btn btn-outline-primary">Discover</a>
-      <% if (loggedIn) { %>
+      <% if (login) { %>
         <a role="button" id="random" class="btn btn-outline-primary">Random</a>
       <% } %>
       <div class="nav-link">
@@ -22,9 +22,15 @@
         aria-describedby="search-addon" />
       </div>
     </nav>
+        <%if(error && error.length > 0){%>
+          <div class="alert alert-danger"><%=error%></div>
+      <%}%>
+      <%if(success && success.length > 0){%>
+          <div class="alert alert-success"><%=success%></div>
+      <%}%>
     <div class ="hero text-center mt-5 ">
       <h1 class="display-1">MOVIE RATER</h1>
-      <% if (loggedIn) { %>
+      <% if (login) { %>
         <h2>Welcome Back</h2>
       <% } else { %> 
         <h2>Login to rate movies, discover hidden gems and grow your watchlist!</h2>

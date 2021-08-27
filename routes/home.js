@@ -49,7 +49,7 @@ router
   .route('/rating/:id/user')
   .get(checkAuthenticated, (req, res) => {
     const {id} = req.params
-      db.any("SELECT rating FROM ratings WHERE movie_id = $1 AND user_id = $2", [id, req.user.user_id])
+      db.oneOrNone("SELECT rating FROM ratings WHERE movie_id = $1 AND user_id = $2", [id, req.user.user_id])
       .then((rating) => {
         res.send(rating);
       })

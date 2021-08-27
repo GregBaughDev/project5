@@ -1,7 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const passport = require("passport");
+const flash = require("express-flash");
 const session = require("express-session");
+const methodOverride = require("method-override");
 const app = express();
 
 const image_URL = 'https://image.tmdb.org/t/p/w185/';
@@ -9,6 +11,7 @@ const image_URL = 'https://image.tmdb.org/t/p/w185/';
 const port = process.env.PORT || 3000;
 
 /// Session Middleware
+app.use(flash());
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -21,21 +24,21 @@ const initializePassport = require("./passportConfig");
 initializePassport(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+// Delete
+app.use(methodOverride('_method'))
+
 
 // Set login and avatar variable when authenticated
 app.use(function (req, res, next) {
   res.locals.login = req.isAuthenticated();
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   if(req.isAuthenticated()){
     res.locals.avatar = image_URL + req.user.avatar
     }
   next(); 
 });
 
-// Set API key
-app.use(function (req, res, next) {
-  res.locals.key = process.env.SECRET;
-  next(); 
-});
 
 // require routes
 const homeRouter = require('./routes/home');
@@ -64,13 +67,6 @@ app.use("/signup", signupRouter)
 app.use('/movies', moviesRouter);
 app.use("/email", emailRouter)
 
-
-// TODO: REMOVE
-// Test passport
-app.get('/test', function (req, res) {
-  if(!req.user) return res.send("Not logged in")
-  return res.send(req.user)
-})
 
 // 404
 app.get("*", (req, res) => {

@@ -9,9 +9,8 @@ function randomMovie(){
         if(data.poster_path && data.adult === false){
             $('#movie-details')
             .append(`<img class="rounded-circle" style="width: 120px;height: 120px;object-fit:cover" src="${image_URL}${data.poster_path}" alt="${data.title} poster">`)
-            $('#ava').append(`<input class="form-control d-none" type="text" name="avatar" id="avatar" value="${data.poster_path}" required readonly>`)   
+            $('#ava').append(`<input class="form-control d-none" type="text" name="avatar" id="avatar" value="${data.poster_path}" required  readonly>`)   
         }
-        else(randomMovie())
     })
     .catch(e => {
         randomMovie()

@@ -1,13 +1,22 @@
 <%- include('./partials/head') %>
 <%- include('./partials/header') %>
     <main class="main justify-content-center container-lg">
+      <%if(error && error.length > 0){%>
+          <div class="alert alert-danger"><%=error%></div>
+      <%}%>
+      <%if(success && success.length > 0){%>
+          <div class="alert alert-success"><%=success%></div>
+      <%}%>
         <div class ="hero text-center mt-5 ">
             <img class="rounded-circle" style="width: 120px;height: 120px;object-fit:cover" src="<%=avatar%>">
             <h2 class="display-2"> Welcome back <%=username%>!</h2>
-            <a role="button" id="my-ratings" class="btn btn-outline-primary">My Top Ratings</a>
-            <a href="/" role="button" id="my-ratings" class="btn btn-outline-primary">Go to movies</a>
+            <a role="button" id="my-ratings" class="btn btn-outline-primary">My Ratings</a>
+            <a role="button" id="my-watchlist" class="btn btn-outline-primary">My Watchlist</a>
         </div>
         <div id="api-content" class="d-flex align-items-center flex-wrap justify-content-center mb-5 d-none"></div>
+        <div class="d-flex align-items-center flex-wrap justify-content-center my-5">
+            <a href="/" role="button" class="btn btn-outline-primary">Go to all movies</a>
+        </div>   
     </main>
     <script src="/js/app.js" defer></script>
     <script src="/js/views.js" defer></script>

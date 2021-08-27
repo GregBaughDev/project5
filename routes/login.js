@@ -10,13 +10,14 @@ router
   })
   .post(checkNotAuthenticated,
     passport.authenticate('local', {
+      failureRedirect :"/login",
+      failureFlash : true,
       successRedirect: '/dashboard',
-      failureRedirect: '/login',
+      successFlash : true,
     }))
     
 router.get('/logout', (req, res) => {
   req.logout();
-  console.log('You have logged out successfully');
   res.redirect('/');
 });
 
