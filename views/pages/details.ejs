@@ -19,10 +19,17 @@
         </div>
         <% if(loggedIn) { %>
         <div class="w-50 my-4 d-flex flex-column align-items-center">
-            <form id="watchlist" >
-                <label for="watchlist-add" class="form-label">Add to my watch list</label>
-                <button class="btn btn-warning">Add!</button> 
-            </form>
+            <% if(loggedIn && !watchData) { console.log(watchData) %>
+                <form action="/movies/<%= id %>/watch" method="POST">
+                    <label for="watchlist_add" class="form-label">Add to my watch list</label>
+                    <button type="submit" class="btn btn-warning">Add!</button>
+                </form> 
+            <% } else if(loggedIn && watchData) { console.log(watchData) %>
+                <form action="/movies/<%= id %>/watch?_method=DELETE" method="POST">
+                    <label for="watchlist_add" class="form-label">Remove from watchlist</label>
+                    <button type="submit" class="btn btn-danger">Remove</button> 
+                </form>
+            <% } %>
         </div>
         <% } %>
     </div>
