@@ -211,7 +211,3 @@ footer {
   background-color: #FFF;
   background-image: url(/assets/church.png);
 }
-
-.watched  img{
-  border: 2px solid var(--highlight);
-}

@@ -92,11 +92,6 @@ const makeCard = (movie, page) => {
       $(movieHTML).prepend(`<div class="score-count score">${votes} vote/s</div>`);
     }
   })
-  $.get(`http://localhost:3000/rating/${movie.id}/user`, function (data) {
-    if (data.rating) {
-      $('.movie-div').addClass("watched")
-    }
-  })
   $('#api-content').append(movieHTML);
 }
 
